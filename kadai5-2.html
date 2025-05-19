@@ -4,7 +4,7 @@
     <title>演習課題5-2：外部APIの呼び出しテスト</title>
 </head>
 <body>
-    <h1 id="msg">何かのAPI</h1>
+    <h1 id="msg">猫情報API</h1>
     <form name="apiform"><p>
         何かのフォーム：<input type="text" name="form_data">
         <button type="button" id="btn1" onclick="some_api(this.form)">実行</button>
@@ -14,7 +14,13 @@
     <script>
         async function some_api(myForm) {
             // ここにコードを書く
-            document.getElementById("result").innerHTML += myForm.form_data.value+"<br />";
+            const endpoint = "https://catfact.ninja/fact?max_length=60";
+            const aRes = await fetch(endpoint);
+            const data = await aRes.json();
+
+            console.log(data);
+            document.getElementById("result").innerHTML += "猫情報API　の調査結果を表示します。<br>";
+            document.getElementById("result").innerHTML += "猫の雑学　　"+data.fact;
             document.apiform.reset();
         }
     </script>
